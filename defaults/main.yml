@@ -1,2 +1,3 @@
 ---
 # defaults file for ansible-basic-server-setup
+additional_packages_to_install: []
