@@ -23,6 +23,7 @@
   apt: pkg={{ item }} state=latest
   become: true
   with_items: "{{ additional_packages_to_install }}"
+  when: additional_packages_to_install is defined
 
 - name: Upgrade all packages
   apt: upgrade=safe
