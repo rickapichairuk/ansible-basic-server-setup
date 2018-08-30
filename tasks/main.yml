@@ -2,8 +2,19 @@
 # Basic server security & setup
 # ====================================================
 
-- name:   Update APT package cache
+- name: Update APT package cache
   action: apt update_cache=yes
+
+- name: install apt key for yarn
+  become: true
+  apt_key:
+    url: https://dl.yarnpkg.com/debian/pubkey.gpg
+    state: present
+
+- name: add apt repo for yarn
+  apt_repository:
+    repo: deb https://dl.yarnpkg.com/debian/ stable main
+    state: present
 
 - name: install essential packages
   apt: pkg={{ item }} state=latest
