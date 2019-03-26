@@ -16,13 +16,17 @@
     repo: deb https://dl.yarnpkg.com/debian/ stable main
     state: present
 
-- name: "install software-properties-common on Ubuntu 18"
-    apt: pkg=software-properties-common state=latest
-    when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "18")
+- name: install software-properties-common on Ubuntu 18
+  apt:
+    name: software-properties-common
+    state: latest
+  when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "18")
 
-- name: "install python-software-properties on Ubuntu < 18"
-    apt: pkg=python-software-properties state=latest
-    when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] != "18")
+- name: install python-software-properties on Ubuntu < 18
+  apt:
+    name: python-software-properties
+    state: latest
+  when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version']|int < 18)
 
 - name: install essential packages
   apt: pkg={{ item }} state=latest
@@ -31,7 +35,6 @@
     - build-essential
     - git-core
     - python-setuptools
-    - python-software-properties
     - python-pip
     - aptitude
     - fail2ban
@@ -53,7 +56,7 @@
   apt:
     name: nodejs
     state: present
-
+ 
 - name: install other packages
   apt: pkg={{ item }} state=latest
   become: true
