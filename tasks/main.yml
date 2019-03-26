@@ -16,6 +16,14 @@
     repo: deb https://dl.yarnpkg.com/debian/ stable main
     state: present
 
+- name: "install software-properties-common on Ubuntu 18"
+    apt: pkg=software-properties-common state=latest
+    when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] == "18")
+
+- name: "install python-software-properties on Ubuntu < 18"
+    apt: pkg=python-software-properties state=latest
+    when: (ansible_facts['distribution'] == "Ubuntu" and ansible_facts['distribution_major_version'] != "18")
+
 - name: install essential packages
   apt: pkg={{ item }} state=latest
   become: true
